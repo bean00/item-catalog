@@ -1,0 +1,7 @@
+tags
+
+*.txt
+
+*.pyc
+
+itemcatalog.db
