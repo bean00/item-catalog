@@ -1,3 +1,4 @@
+templates/tags
 tags
 
 *.txt
@@ -5,3 +6,7 @@ tags
 *.pyc
 
 itemcatalog.db
+
+*.swp
+
+templates/*.swp

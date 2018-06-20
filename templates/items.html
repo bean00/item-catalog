@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <!--<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">-->
+  </head>
+
+  <body>
+    <h1>Item Catalog</h1>
+
+    <div>
+      <h3>Categories</h3>
+      {% for category in categories %}
+        <p>{{ category.name }}</p>
+      {% endfor %}
+    </div>
+
+    <h2>{{ category.name }} Items</h2>
+    <a href="#">Edit category</a><br>
+    <a href="#">Delete category</a><br><br>
+    <a href="#">New item</a><br>
+
+    {% if not items %}
+      <p>You currently have no items.</p>
+    {% endif %}
+
+    <div>
+      {% for i in items %}
+        <p>{{ i.name }}</p>
+        <p>{{ i.description }}</p>
+        <p>{{ i.price }}</p>
+
+        <a href="#">Edit</a>
+        <a href="#">Delete</a>
+      {% endfor %}
+    </div>
+  </body>
+</html>

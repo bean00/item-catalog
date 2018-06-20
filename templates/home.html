@@ -1,0 +1,14 @@
+<html>
+  <body>
+    <h1>Item Catalog</h1>
+
+    <div>
+      <h3>Categories</h3>
+      {% for category in categories %}
+        <p>{{ category.name }}</p>
+      {% endfor %}
+    </div>
+
+    <p>Welcome to the Item Catalog app! You can view items by selecting a category in the side bar. Login to create, edit, or delete categories and items.</p>
+  </body>
+</html>
