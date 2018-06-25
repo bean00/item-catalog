@@ -1,19 +1,16 @@
-<html>
-  <head>
-    <!--<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">-->
-  </head>
+{% extends "base.html" %}
 
-  <body>
+{% block content %}
     <h1>Create a New Category</h1>
 
-    <form action="#" method="post">
+    <form action="{{ url_for('newCategory') }}" method="post">
       <p>Name:</p>
       <input type ="text" size="30" name="name"><br>
       <br>
 
-      <input type="submit" value="Create">
+      <input type="submit" value="Create"><br>
+      <br>
 
-      <a href="#">Cancel</a>
+      <a href="{{ url_for('home') }}">Cancel</a>
     </form>
-  </body>
-</html>
+{% endblock %}

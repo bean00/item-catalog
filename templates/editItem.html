@@ -1,26 +1,22 @@
-<html>
-  <head>
-    <!--<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">-->
-  </head>
+{% extends "base.html" %}
 
-  <body>
-    <h1>Edit Item ({{ category.name }})</h1>
+{% block content %}
+  <h1>Edit Item ({{ category.name }})</h1>
 
-    <form action="#" method="post">
-      <p>Name:</p>
-      <input type ="text" size="30" name="name" placeholder="{{ item.name }}">
+  <form action="{{ url_for('editItem', category_id=category.id, item_id=item.id) }}" method="post">
+    <p>Name:</p>
+    <input type ="text" size="30" name="name" placeholder="{{ item.name }}">
 
-      <p>Description:</p>
-      <textarea name="description" rows="5" cols="40" placeholder="{{ item.description }}"></textarea>
+    <p>Description:</p>
+    <textarea name="description" rows="5" cols="40" placeholder="{{ item.description }}"></textarea>
 
-      <p>Price:</p>
-      <input type="text" size="10" name="price" placeholder="{{ item.price }}">
-      <br>
-      <br>
+    <p>Price:</p>
+    <input type="text" size="10" name="price" placeholder="{{ item.price }}">
+    <br>
+    <br>
 
-      <input type="submit" value="Edit">
+    <input type="submit" value="Edit">
 
-      <a href="#">Cancel</a>
-    </form>
-  </body>
-</html>
+    <a href="{{ url_for('showItems', category_id=category.id) }}">Cancel</a>
+  </form>
+{% endblock %}

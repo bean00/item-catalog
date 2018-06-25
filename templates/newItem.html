@@ -1,26 +1,23 @@
-<html>
-  <head>
-    <!--<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">-->
-  </head>
+{% extends "base.html" %}
 
-  <body>
-    <h1>Create a New Item ({{ category.name }})</h1>
+{% block content %}
+  <h1>Create a New Item ({{ category.name }})</h1>
 
-    <form action="#" method="post">
-      <p>Name:</p>
-      <input type="text" size="30" name="name">
+  <form action="{{ url_for('newItem', category_id=category.id) }}" method="post">
+    <p>Name:</p>
+    <input type="text" size="30" name="name">
 
-      <p>Description:</p>
-      <input type="text" size="30" name="description">
+    <p>Description:</p>
+    <input type="text" size="30" name="description">
 
-      <p>Price:</p>
-      <input type="text" size="30" name="price">
-      <br>
-      <br>
+    <p>Price:</p>
+    <input type="text" size="30" name="price">
+    <br>
+    <br>
 
-      <input type="submit" value="Create">
+    <input type="submit" value="Create"><br>
+    <br>
 
-      <a href="#">Cancel</a>
-    </form>
-  </body>
-</html>
+    <a href="{{ url_for('showItems', category_id=category.id) }}">Cancel</a>
+  </form>
+{% endblock %}

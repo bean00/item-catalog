@@ -1,22 +1,19 @@
-<html>
-  <head>
-    <!--<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">-->
-  </head>
+{% extends "base.html" %}
 
-  <body>
-    <h1>Item Catalog</h1>
+{% block content %}
+  <div>
+    <h3>Categories</h3>
+    <p>[<a href="{{ url_for('newCategory') }}">New category</a>]</p>
+    {% for category in categories %}
+      <p><a href="{{ url_for('showItems', category_id=category.id)}}">{{ category.name }}</a></p>
+    {% endfor %}
+  </div>
 
-    <div>
-      <h3>Categories</h3>
-      {% for category in categories %}
-        <p>{{ category.name }}</p>
-      {% endfor %}
-    </div>
-
+  {% if category %}
     <h2>{{ category.name }} Items</h2>
-    <a href="#">Edit category</a><br>
-    <a href="#">Delete category</a><br><br>
-    <a href="#">New item</a><br>
+    <a href="{{ url_for('editCategory', category_id=category.id) }}">Edit category</a><br>
+    <a href="{{ url_for('deleteCategory', category_id=category.id) }}">Delete category</a><br><br>
+    <a href="{{ url_for('newItem', category_id=category.id) }}">New item</a><br>
 
     {% if not items %}
       <p>You currently have no items.</p>
@@ -28,9 +25,11 @@
         <p>{{ i.description }}</p>
         <p>{{ i.price }}</p>
 
-        <a href="#">Edit</a>
-        <a href="#">Delete</a>
+        <a href="{{ url_for('editItem', category_id=category.id, item_id=i.id) }}">Edit</a>
+        <a href="{{ url_for('deleteItem', category_id=category.id, item_id=i.id) }}">Delete</a>
       {% endfor %}
     </div>
-  </body>
-</html>
+  {% else %}
+    <p>Welcome to the Item Catalog app! You can view items by selecting a category in the side bar. Login to create, edit, or delete categories and items.</p>
+  {% endif %}
+{% endblock %}
