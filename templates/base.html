@@ -7,10 +7,12 @@
   </head>
 
   <body>
-    <h1>Item Catalog</h1>
-    <a href="{{ url_for('home') }}">
-      <button class="btn"><i class="fa fa-home"></i> Home</button>
-    </a>
+    <header>
+      <h1>Item Catalog</h1>
+      <a href="{{ url_for('home') }}">
+        <button class="btn"><i class="fa fa-home"></i> Home</button>
+      </a>
+    </header>
 
     {% block content %}
     {% endblock %}
