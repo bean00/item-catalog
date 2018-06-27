@@ -1,20 +1,57 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Item Catalog</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+    <title>Item Catalog</title>
   </head>
 
   <body>
-    <header>
-      <h1>Item Catalog</h1>
-      <a href="{{ url_for('home') }}">
-        <button class="btn"><i class="fa fa-home"></i> Home</button>
-      </a>
-    </header>
+    <div class="wrapper">
+      <nav id="sidebar">
+        <div class="sidebar-header">
+          <h3>Categories</h3>
+          <a class="btn btn-primary" href="{{ url_for('newCategory') }}"
+             role="button">New category</a>
+        </div>
 
-    {% block content %}
-    {% endblock %}
+        <ul class="list-unstyled components">
+          {% for category in categories %}
+            <li>
+              <a href="{{ url_for('showItems', category_id=category.id)}}">{{ category.name }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </nav>
+
+      <div id="content">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div>
+            <button type="button" id="sidebarCollapse" class="btn btn-info">
+              <i class="fa fa-align-left"></i>
+              <span>Toggle Sidebar</span>
+            </button>
+          </div>
+
+          <h1>Item Catalog</h1>
+          <a href="{{ url_for('home') }}">
+            <button class="btn btn-secondary"><i class="fa fa-home"></i> Home</button>
+          </a>
+        </nav>
+
+        {% block content %}
+        {% endblock %}
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='app.js') }}"></script>
   </body>
 </html>
