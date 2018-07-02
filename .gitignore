@@ -10,3 +10,6 @@ itemcatalog.db
 *.swp
 
 templates/*.swp
+
+client_secrets.json
+other_secrets.json
