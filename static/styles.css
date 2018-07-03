@@ -52,11 +52,6 @@ a, a:hover, a:focus {
     border-bottom: 1px solid #47748b;
 }
 
-/*#sidebar ul p {*/
-/*    color: #fff;*/
-/*    padding: 10px;*/
-/*}*/
-
 #sidebar ul li a {
     color: #fff;
     padding: 10px;
@@ -70,17 +65,6 @@ a, a:hover, a:focus {
     background: #fff;
 }
 
-/*#sidebar ul li.active > a, a[aria-expanded="true"] {*/
-/*    color: #fff;*/
-/*    background: #6d7fcc;*/
-/*}*/
-
-/*ul ul a {*/
-/*    font-size: 0.9em !important;*/
-/*    padding-left: 30px !important;*/
-/*    background: #6d7fcc;*/
-/*}*/
-
 /* -----------------------------------------------
     CONTENT STYLE
 ----------------------------------------------- */
@@ -91,63 +75,6 @@ a, a:hover, a:focus {
     transition: all 0.3s;
 }
 
-
-
-
-/** {*/
-/*    box-sizing: border-box;*/
-/*    font-family: Arial;*/
-/*}*/
-
-/*header {*/
-/*    text-align: center;*/
-/*    border-bottom: 1px solid black;*/
-/*}*/
-
-/*.column {*/
-/*    float: left;*/
-/*    padding: 15px;*/
-/*}*/
-
-/*.clearfix::after {*/
-/*    content: "";*/
-/*    clear: both;*/
-/*    display: table;*/
-/*}*/
-
-/*.menu {*/
-/*    width: 25%;*/
-/*}*/
-
-/*.content {*/
-/*    width: 75%;*/
-/*    border-left: 1px solid black;*/
-/*}*/
-
-/*.menu ul {*/
-/*    list-style-type: none;*/
-/*    margin: 0;*/
-/*    padding: 0;*/
-/*}*/
-
-/*.menu li {*/
-/*    padding: 5px;*/
-/*    background-color: #33b5e5;*/
-/*    color: #ffffff;*/
-/*    border: 1px solid black;*/
-/*}*/
-
-/*.menu li a {*/
-/*    display: block;*/
-/*    color: #000;*/
-/*    padding: 8px;*/
-/*    text-decoration: none;*/
-/*}*/
-
-/*.menu li:hover {*/
-/*    background-color: #0099cc;*/
-/*}*/
-
-/*.btn {*/
-/*    cursor: pointer;*/
-/*}*/
+.flash {
+    background: #cee5f5;
+}
