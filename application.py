@@ -1,15 +1,16 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify, flash
+from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import flash
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Category, Item
-
 from flask import make_response
 from flask import session as login_session
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
 import json
 import httplib2
-import random, string
+import random
+import string
 import requests
 
 app = Flask(__name__)
@@ -21,7 +22,7 @@ SECRET_KEY = json.loads(
 APPLICATION_NAME = "Restaurant Menu Application"
 
 engine = create_engine("sqlite:///itemcatalog.db",
-        connect_args={"check_same_thread" : False})
+                       connect_args={"check_same_thread": False})
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
@@ -40,7 +41,7 @@ def categoryJSON(category_id):
 @app.route('/category/<int:category_id>/item/<int:item_id>/JSON/')
 def itemJSON(category_id, item_id):
     item = session.query(Item).filter_by(id=item_id).first()
-    return jsonify(Item = item.serialize)
+    return jsonify(Item=item.serialize)
 
 
 # ----- Authentication -----
@@ -49,7 +50,7 @@ def itemJSON(category_id, item_id):
 @app.route('/login')
 def showLogin():
     state = ''.join(random.choice(string.ascii_uppercase + string.digits)
-            for x in xrange(32))
+                    for x in xrange(32))
     login_session['state'] = state
     return render_template("login.html", STATE=state)
 
@@ -107,8 +108,8 @@ def gconnect():
     stored_access_token = login_session.get('access_token')
     stored_gplus_id = login_session.get('gplus_id')
     if stored_access_token is not None and gplus_id == stored_gplus_id:
-        response = make_response(json.dumps('Current user is already connected.'),
-                                 200)
+        response = make_response(json.dumps(
+                                 'Current user is already connected.'), 200)
         response.headers['Content-Type'] = 'application/json'
         return response
 
@@ -133,7 +134,9 @@ def gconnect():
     output += '!</h1>'
     output += '<img src="'
     output += login_session['picture']
-    output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+    output += """ "style = "width: 300px; height: 300px;
+                 border-radius: 150px;-webkit-border-radius: 150px;
+                 -moz-border-radius: 150px;">"""
     flash("you are now logged in as %s" % login_session['username'])
     print "done!"
     return output
@@ -145,13 +148,15 @@ def gdisconnect():
     access_token = login_session.get('access_token')
     if access_token is None:
         print 'Access Token is None'
-        response = make_response(json.dumps('Current user not connected.'), 401)
+        response = make_response(json.dumps('Current user not connected.'),
+                                 401)
         response.headers['Content-Type'] = 'application/json'
         return response
     print 'In gdisconnect access token is %s', access_token
     print 'User name is: '
     print login_session['username']
-    url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' % login_session['access_token']
+    google_oauth_url = "https://accounts.google.com/o/oauth2/revoke?token=%s"
+    url = google_oauth_url % login_session['access_token']
     h = httplib2.Http()
     result = h.request(url, 'GET')[0]
     print 'result is '
@@ -166,7 +171,8 @@ def gdisconnect():
         response.headers['Content-Type'] = 'application/json'
         return response
     else:
-        response = make_response(json.dumps('Failed to revoke token for given user.', 400))
+        response = make_response(
+                json.dumps('Failed to revoke token for given user.', 400))
         response.headers['Content-Type'] = 'application/json'
         return response
 
@@ -184,7 +190,8 @@ def home():
 @app.route("/category/new/", methods=["GET", "POST"])
 def newCategory():
     if "username" not in login_session:
-        flash("You are not logged in. Please login to create a new category.", "login")
+        flash("You are not logged in. Please login to create a new category.",
+              "login")
         return redirect("/")
     if request.method == "POST":
         category = Category(name=request.form["name"])
@@ -198,7 +205,8 @@ def newCategory():
 @app.route("/category/<int:category_id>/edit/", methods=["GET", "POST"])
 def editCategory(category_id):
     if "username" not in login_session:
-        flash("You are not logged in. Please login to edit the category.", "login")
+        flash("You are not logged in. Please login to edit the category.",
+              "login")
         return redirect("/")
     category = session.query(Category).filter_by(id=category_id).first()
     name = category.name
@@ -216,7 +224,8 @@ def editCategory(category_id):
 @app.route("/category/<int:category_id>/delete/", methods=["GET", "POST"])
 def deleteCategory(category_id):
     if "username" not in login_session:
-        flash("You are not logged in. Please login to delete the category.", "login")
+        flash("You are not logged in. Please login to delete the category.",
+              "login")
         return redirect("/")
     category = session.query(Category).filter_by(id=category_id).first()
     if request.method == "POST":
@@ -235,13 +244,14 @@ def showItems(category_id):
     category = session.query(Category).filter_by(id=category_id).first()
     items = session.query(Item).filter_by(category_id=category_id).all()
     return render_template("items.html", categories=categories,
-            category=category, items=items)
+                           category=category, items=items)
 
 
 @app.route("/category/<int:category_id>/item/new/", methods=["GET", "POST"])
 def newItem(category_id):
     if "username" not in login_session:
-        flash("You are not logged in. Please login to create a new item.", "login")
+        flash("You are not logged in. Please login to create a new item.",
+              "login")
         return redirect("/")
     category = session.query(Category).filter_by(id=category_id).first()
     if request.method == "POST":
@@ -255,14 +265,15 @@ def newItem(category_id):
         return redirect(url_for("showItems", category_id=category_id))
     else:
         return render_template("newItem.html", category=category,
-                category_id=category_id)
+                               category_id=category_id)
 
 
 @app.route("/category/<int:category_id>/item/<int:item_id>/edit/",
-        methods=["GET", "POST"])
+           methods=["GET", "POST"])
 def editItem(category_id, item_id):
     if "username" not in login_session:
-        flash("You are not logged in. Please login to edit the item.", "login")
+        flash("You are not logged in. Please login to edit the item.",
+              "login")
         return redirect("/")
     category = session.query(Category).filter_by(id=category_id).first()
     item = session.query(Item).filter_by(id=item_id).first()
@@ -284,18 +295,19 @@ def editItem(category_id, item_id):
         return redirect(url_for("showItems", category_id=category_id))
     else:
         return render_template("editItem.html", category=category,
-                category_id=category_id, item=item)
+                               category_id=category_id, item=item)
 
 
 @app.route("/category/<int:category_id>/item/<int:item_id>/delete/",
-        methods=["GET", "POST"])
+           methods=["GET", "POST"])
 def deleteItem(category_id, item_id):
     if "username" not in login_session:
-        flash("You are not logged in. Please login to delete the item.", "login")
+        flash("You are not logged in. Please login to delete the item.",
+              "login")
         return redirect("/")
     category = session.query(Category).filter_by(id=category_id).first()
     item = session.query(Item).filter_by(category_id=category_id,
-            id=item_id).first()
+                                         id=item_id).first()
     if request.method == "POST":
         session.delete(item)
         session.commit()
