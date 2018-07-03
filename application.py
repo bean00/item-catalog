@@ -28,6 +28,21 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
+# ----- API Endpoints -----
+
+@app.route('/category/<int:category_id>/JSON/')
+def categoryJSON(category_id):
+    category = session.query(Category).filter_by(id=category_id).first()
+    items = session.query(Item).filter_by(category_id=category_id).all()
+    return jsonify(Items=[i.serialize for i in items])
+
+
+@app.route('/category/<int:category_id>/item/<int:item_id>/JSON/')
+def itemJSON(category_id, item_id):
+    item = session.query(Item).filter_by(id=item_id).first()
+    return jsonify(Item = item.serialize)
+
+
 # ----- Authentication -----
 
 # Create anti-forgery state token
