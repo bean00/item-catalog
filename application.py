@@ -21,8 +21,7 @@ SECRET_KEY = json.loads(
         open('other_secrets.json', 'r').read())['secret_key']
 APPLICATION_NAME = 'Restaurant Menu Application'
 
-engine = create_engine('sqlite:///itemcatalog.db',
-                       connect_args={'check_same_thread': False})
+engine = create_engine('postgresql://vagrant:word@localhost/itemcatalog')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
