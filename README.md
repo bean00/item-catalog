@@ -8,6 +8,7 @@ A project that lists out categories, and items in those categories. Demonstrates
     - ```$ cd item-catalog```
 - Start up the Vagrant virtual machine (VM)
 - Run `python database_setup.py`
+- Run `python lotsofitems.py` (to populate database with initial data)
 - Run `python application.py`
 - Open `localhost:5000` in a web browser
 
